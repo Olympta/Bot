@@ -58,7 +58,7 @@ class App(commands.Cog):
     async def app(self, ctx: discord.ApplicationContext, name: Option(str, description="Name of the app", autocomplete=apps_autocomplete, required=True)) -> None:
         app = await iterate_apps(query=name)
         if app == None:
-            await ctx.send_error("That app isn't on Jailbreaks.app.")
+            await ctx.respond("That app isn't on Jailbreaks.app.", ephemeral=True)
             return
         mainDLLink = f"https://api.jailbreaks.app/{name.replace(' ', '')}"
         allVersions = f"[Latest ({app['version']})](https://api.jailbreaks.app/{name.replace(' ', '')})"
