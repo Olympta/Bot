@@ -3,7 +3,6 @@ from discord.commands import slash_command, Option
 from discord.commands.context import AutocompleteContext
 from discord.ext import commands
 
-import time
 import json
 import aiohttp
 import io
@@ -54,7 +53,6 @@ async def iterate_apps(query) -> dict:
 class App(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.refreshTime = int(round(time.time() * 1000))
 
     @slash_command(description="Get info about an app.")
     async def app(self, ctx: discord.ApplicationContext, name: Option(str, description="Name of the app", autocomplete=apps_autocomplete, required=True)) -> None:
@@ -76,7 +74,7 @@ class App(commands.Cog):
         embed.add_field(
             name=f"Download{'' if len(app['other_versions']) == 0 else 's'}", value=allVersions, inline=True)
         embed.add_field(
-            name="Developer", value=f"{('[' + app['dev'] + '](https://twitter.com/' + app['dev'] + ')') if app['dev'].startswith('@') else possibleApp['dev']}")
+            name="Developer", value=f"{('[' + app['dev'] + '](https://twitter.com/' + app['dev'] + ')') if app['dev'].startswith('@') else app['dev']}")
         embed.set_footer(text="SignedBot | Made by Jaidan", icon_url="https://avatars.githubusercontent.com/u/37126748")
         await ctx.respond(embed=embed)
 

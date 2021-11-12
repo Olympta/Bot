@@ -11,6 +11,7 @@ class Status(commands.Cog):
     @slash_command(description="Gets status of Jailbreaks.app's certificate.")
     async def status(self, ctx: discord.ApplicationContext) -> None:
         status = (await fetch_status()).get("status")
+        await self.bot.change_presence(activity=discord.Game(name="{} | https://jailbreaks.app".format(status)))
         embed = discord.Embed(title="Jailbreaks.app Status")
         embed.set_thumbnail(url="https://jailbreaks.app/img/Jailbreaks.png")
         embed.set_footer(text="SignedBot | Made by Jaidan", icon_url="https://avatars.githubusercontent.com/u/37126748")
