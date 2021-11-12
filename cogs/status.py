@@ -8,7 +8,7 @@ class Status(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(guild_ids=[834281087101304873], description="Gets status of Jailbreaks.app's certificate.")
+    @slash_command(description="Gets status of Jailbreaks.app's certificate.")
     async def status(self, ctx: discord.ApplicationContext) -> None:
         status = (await fetch_status()).get("status")
         embed = discord.Embed(title="Jailbreaks.app Status")

@@ -56,7 +56,7 @@ class App(commands.Cog):
         self.bot = bot
         self.refreshTime = int(round(time.time() * 1000))
 
-    @slash_command(guild_ids=[834281087101304873], description="Get info about an app.")
+    @slash_command(description="Get info about an app.")
     async def app(self, ctx: discord.ApplicationContext, name: Option(str, description="Name of the app", autocomplete=apps_autocomplete, required=True)) -> None:
         app = await iterate_apps(query=name)
         if app == None:
