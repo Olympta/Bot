@@ -12,7 +12,7 @@ cogs = [
     "cogs.status",
     "cogs.app"
 ]
-bot = discord.Bot()
+bot = discord.Bot(activity=discord.Game("/status and /app"), status=discord.Status.dnd)
 initial_extensions = []
 intents = discord.Intents.default()
 intents.members = True
@@ -28,5 +28,5 @@ if __name__ == "__main__":
     for cog in cogs:
         logger.info("Loading '{}'".format(cog))
         bot.load_extension(cog)
-
+        
 bot.run(os.environ.get("BOT_TOKEN"), reconnect=True)
