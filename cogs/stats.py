@@ -15,17 +15,22 @@ class Info(commands.Cog):
         self.bot = bot
         self.start_time = datetime.now()
         
-    @slash_command(description="Get info about the bot.")
+    @slash_command(description='Get info about the bot.')
     async def stats(self, ctx: discord.ApplicationContext) -> None:
         process = psutil.Process(os.getpid())
-
+        members = 0
+        
+        for guild in self.bot.guilds:
+            members += guild.member_count
+        
         embed = discord.Embed(title=f"{self.bot.user.name} Statistics", color=discord.Color.red())
+        embed.description = f"Serving {members} members in {len(self.bot.guilds)} guilds."
         embed.set_thumbnail(url=self.bot.user.display_avatar)
-        embed.add_field(name="Bot Started", value=format_dt(self.start_time, style='R'))
-        embed.add_field(name="CPU Usage", value=f"{psutil.cpu_percent()}%")
-        embed.add_field(name="Memory Usage", value=f"{floor(process.memory_info().rss/1000/1000)} MB")
-        embed.add_field(name="Python Version", value=platform.python_version())
-        embed.set_footer(text="SignedBot | Made by Jaidan", icon_url="https://avatars.githubusercontent.com/u/37126748")
+        embed.add_field(name='Bot Started', value=format_dt(self.start_time, style='R'))
+        embed.add_field(name='CPU Usage', value=f"{psutil.cpu_percent()}%")
+        embed.add_field(name='Memory Usage', value=f"{floor(process.memory_info().rss/1000/1000)} MB")
+        embed.add_field(name='Python Version', value=platform.python_version())
+        embed.set_footer(text='Jailbreaks.app | Made by Jaidan', icon_url='https://avatars.githubusercontent.com/u/37126748')
 
         await ctx.respond(embed=embed, ephemeral=True)
     

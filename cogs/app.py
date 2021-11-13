@@ -54,28 +54,28 @@ class App(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(description="Get info about an app.")
-    async def app(self, ctx: discord.ApplicationContext, name: Option(str, description="Name of the app", autocomplete=apps_autocomplete, required=True)) -> None:
+    @slash_command(description='Get info about an app.')
+    async def app(self, ctx: discord.ApplicationContext, name: Option(str, description='Name of the app', autocomplete=apps_autocomplete, required=True)) -> None:
         app = await iterate_apps(query=name)
         if app == None:
             await ctx.respond("That app isn't on Jailbreaks.app.", ephemeral=True)
             return
         mainDLLink = f"https://api.jailbreaks.app/{name.replace(' ', '')}"
-        allVersions = f"[Latest ({app['version']})](https://api.jailbreaks.app/{name.replace(' ', '')})"
-        if len(app['other_versions']) != 0:
-            for version in app['other_versions']:
+        allVersions = f"[Latest ({app.get('version')})](https://api.jailbreaks.app/{name.replace(' ', '')})"
+        if len(app.get('other_versions')) != 0:
+            for version in app.get('other_versions'):
                 allVersions += f"\n[{version}](https://api.jailbreaks.app/{name.replace(' ', '')}/{version})"
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://jailbreaks.app/{app['icon']}") as icon:
+            async with session.get(f"https://jailbreaks.app/{app.get('icon')}") as icon:
                 color = ColorThief(io.BytesIO(await icon.read())).get_color(quality=1)
-        embed = discord.Embed(title=app['name'], color=discord.Color.from_rgb(
-            color[0], color[1], color[2]), url=mainDLLink, description=app['short-description'])
-        embed.set_thumbnail(url=f"https://jailbreaks.app/{app['icon']}")
+        embed = discord.Embed(title=app.get('name'), color=discord.Color.from_rgb(
+            color[0], color[1], color[2]), url=mainDLLink, description=app.get('short-description'))
+        embed.set_thumbnail(url=f"https://jailbreaks.app/{app.get('icon')}")
         embed.add_field(
-            name=f"Download{'' if len(app['other_versions']) == 0 else 's'}", value=allVersions, inline=True)
+            name=f"Download{'' if len(app.get('other_versions')) == 0 else 's'}", value=allVersions, inline=True)
         embed.add_field(
-            name="Developer", value=f"{('[' + app['dev'] + '](https://twitter.com/' + app['dev'] + ')') if app['dev'].startswith('@') else app['dev']}")
-        embed.set_footer(text="SignedBot | Made by Jaidan", icon_url="https://avatars.githubusercontent.com/u/37126748")
+            name="Developer", value=f"{('[' + app.get('dev') + '](https://twitter.com/' + app.get('dev') + ')') if app.get('dev').startswith('@') else app.get('dev')}")
+        embed.set_footer(text='Jailbreaks.app | Made by Jaidan', icon_url='https://avatars.githubusercontent.com/u/37126748')
         await ctx.respond(embed=embed)
 
 def setup(bot):
