@@ -16,10 +16,10 @@ class Status(commands.Cog):
         embed.set_thumbnail(url="https://jailbreaks.app/img/Jailbreaks.png")
         embed.set_footer(text="SignedBot | Made by Jaidan", icon_url="https://avatars.githubusercontent.com/u/37126748")
         if status == "Signed":
-            embed.add_field(name="Status", value="Signed!")
+            embed.description = "Jailbreaks.app is currently **signed.** This means that all of our apps are installable and usable. If you can’t install / open an app, you are likely blacklisted from using the current certificate."
             embed.color = discord.Color.green()
         else:
-            embed.add_field(name="Status", value="Revoked.")
+            embed.description = "Jailbreaks.app is currently **revoked.** This means that our apps are not installable or usable as of now."
             embed.color = discord.Color.red()
         await ctx.respond(embed=embed)
         
