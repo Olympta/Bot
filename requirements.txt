@@ -2,3 +2,4 @@ python_dotenv==0.19.2
 coloredlogs==15.0.1
 colorthief==0.2.1
 psutil==5.8.0
+git+https://github.com/Pycord-Development/pycord
