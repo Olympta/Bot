@@ -7,7 +7,7 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # system dependencies
-ENV NODE_VERSION=16.8.0
+ENV NODE_VERSION=17.1.0
 RUN apt update
 RUN apt install -y curl git gcc python3-dev
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
@@ -20,5 +20,5 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 # python dependencies
 COPY . .
 RUN pip install autopep8
-RUN pip install -U git+https://github.com/Pycord-Development/pycord
+RUN pip install -r requirements.txt
 RUN npm i -g nodemon
