@@ -36,9 +36,8 @@ class Info(commands.Cog):
     
     @slash_command(description="Test bot and Discord API latency.")
     async def ping(self, ctx: discord.ApplicationContext) -> None:
-        embed = discord.Embed(title="Pong!", color=discord.Color.green())
+        embed = discord.Embed(title="Pong!", color=discord.Color.green(), description='Testing latency...')
         embed.set_thumbnail(url=self.bot.user.display_avatar)
-        embed.description = "Testing latency..."
 
         time_started = datetime.utcnow()
         await ctx.respond(embed=embed, ephemeral=True)
@@ -49,8 +48,8 @@ class Info(commands.Cog):
         elif ping >= 800:
             embed.color = discord.Color.red()
         embed.description = ""
-        embed.add_field(name="Message Latency", value=f"```{ping} ms```")
-        embed.add_field(name="API Latency", value=f"```{floor(self.bot.latency*1000)} ms```")
+        embed.add_field(name='Message Latency', value=f"```{ping} ms```")
+        embed.add_field(name='API Latency', value=f"```{floor(self.bot.latency*1000)} ms```")
         await ctx.edit(embed=embed)
         
 def setup(bot):
