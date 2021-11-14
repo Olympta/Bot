@@ -73,11 +73,11 @@ class App(commands.Cog):
             await ctx.respond("That app isn't on Jailbreaks.app.", ephemeral=True)
             return
         stats = await get_stats(query=app.get('name'))
-        mainDLLink = f"https://api.jailbreaks.app/{name.replace(' ', '')}"
-        allVersions = f"[Latest ({app.get('version')})](https://api.jailbreaks.app/{name.replace(' ', '')})"
+        mainDLLink = f"https://api.jailbreaks.app/install/{name.replace(' ', '')}"
+        allVersions = f"[Latest ({app.get('version')})]({mainDLLink})"
         if len(app.get('other_versions')) != 0:
             for version in app.get('other_versions'):
-                allVersions += f"\n[{version}](https://api.jailbreaks.app/{name.replace(' ', '')}/{version})"
+                allVersions += f"\n[{version}]({mainDLLink}/{version})"
         async with aiohttp.ClientSession() as session:
             async with session.get(f"https://jailbreaks.app/{app.get('icon')}") as icon:
                 color = ColorThief(io.BytesIO(await icon.read())).get_color(quality=1)
