@@ -1,6 +1,5 @@
 import discord
-from discord.commands import slash_command, Option
-from discord.commands.context import AutocompleteContext
+from discord.commands import slash_command
 from discord.ext import commands
 from discord.utils import format_dt
 
