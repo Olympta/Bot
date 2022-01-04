@@ -82,9 +82,9 @@ class App(commands.Cog):
                 allVersions += f"\n[{version}]({mainDLLink}/{version})"
         embed = discord.Embed(title=app.get('name'), color=int(app.get('color').replace('#', ''), 16), url=mainDLLink, description=app.get('short-description'))
         embed.set_thumbnail(url=f"https://jailbreaks.app/{app.get('icon')}")
-        embed.add_field(name=f"Download{'' if len(app.get('other_versions')) == 0 else 's'}", value=allVersions, inline=True)
+        embed.add_field(name=f"Download Link{'' if len(app.get('other_versions')) == 0 else 's'}", value=allVersions, inline=True)
         embed.add_field(name='Developer', value=f"{('[' + app.get('dev') + '](https://twitter.com/' + app.get('dev') + ')') if app.get('dev').startswith('@') else app.get('dev')}", inline=True)
-        embed.add_field(name='Downloads', value=stats)
+        embed.add_field(name='Downloads', value='{:,}'.format(int(stats)))
         embed.set_footer(text='Jailbreaks.app | Made by Jaidan', icon_url='https://avatars.githubusercontent.com/u/37126748')
         await ctx.respond(embed=embed)
 
