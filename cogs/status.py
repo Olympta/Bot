@@ -21,7 +21,7 @@ class Status(commands.Cog):
         else:
             embed.description = 'Jailbreaks.app is currently **revoked.** This means that our apps are not installable or usable as of now.'
             embed.color = discord.Color.red()
-        await ctx.respond(embed=embed)
+        await ctx.respond(embed=embed, ephemeral=True)
         
 def setup(bot):
     bot.add_cog(Status(bot))
