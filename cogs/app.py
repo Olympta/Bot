@@ -70,20 +70,20 @@ class App(commands.Cog):
 
     @slash_command(description='Get info about an app.')
     async def app(self, ctx: discord.ApplicationContext, name: Option(str, description='Name of the app', autocomplete=apps_autocomplete, required=True)) -> None:
-        app = await iterate_apps(query=name)
-        if app == None:
+        app_ = await iterate_apps(query=name)
+        if app_ == None:
             await ctx.respond("That app isn't on Jailbreaks.app.", ephemeral=True)
             return
-        stats = await get_stats(query=app.get('name'))
+        stats = await get_stats(query=app_.get('name'))
         mainDLLink = f"https://api.jailbreaks.app/install/{name.replace(' ', '')}"
-        allVersions = f"[Latest ({app.get('version')})]({mainDLLink})"
-        if len(app.get('other_versions')) != 0:
-            for version in app.get('other_versions'):
+        allVersions = f"[Latest ({app_.get('version')})]({mainDLLink})"
+        if len(app_.get('other_versions')) != 0:
+            for version in app_.get('other_versions'):
                 allVersions += f"\n[{version}]({mainDLLink}/{version})"
-        embed = discord.Embed(title=app.get('name'), color=int(app.get('color').replace('#', ''), 16), url=mainDLLink, description=app.get('short-description'))
-        embed.set_thumbnail(url=f"https://jailbreaks.app/{app.get('icon')}")
-        embed.add_field(name=f"Download Link{'' if len(app.get('other_versions')) == 0 else 's'}", value=allVersions, inline=True)
-        embed.add_field(name='Developer', value=f"{('[' + app.get('dev') + '](https://twitter.com/' + app.get('dev') + ')') if app.get('dev').startswith('@') else app.get('dev')}", inline=True)
+        embed = discord.Embed(title=app_.get('name'), color=int(app_.get('color').replace('#', ''), 16), url=mainDLLink, description=app_.get('short-description'))
+        embed.set_thumbnail(url=f"https://jailbreaks.app/{app_.get('icon')}")
+        embed.add_field(name=f"Download Link{'' if len(app_.get('other_versions')) == 0 else 's'}", value=allVersions, inline=True)
+        embed.add_field(name='Developer', value=f"{('[' + app.get('dev') + '](https://twitter.com/' + app_.get('dev') + ')') if app_.get('dev').startswith('@') else app_.get('dev')}", inline=True)
         embed.add_field(name='Downloads', value='{:,}'.format(int(stats)))
         embed.set_footer(text='Jailbreaks.app | Made by Jaidan', icon_url='https://avatars.githubusercontent.com/u/37126748')
         await ctx.respond(embed=embed)
